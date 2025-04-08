@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./NewParty.css"; // Import the CSS file
+import NavbarComp from "../Components/NavbarComp";
 
 function NewParty() {
   const [name, setName] = useState("");
@@ -27,32 +28,35 @@ function NewParty() {
   };
 
   return (
-    <div className="new-party-container">
-      <h2 className="form-title">Add New Party</h2>
-      <form className="party-form" onSubmit={handleSubmit}>
-        <label>Party Name</label>
-        <input
-          type="text"
-          placeholder="Enter party name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+    <>
+      <NavbarComp />
+      <div className="new-party-container">
+        <h2 className="form-title">Add New Party</h2>
+        <form className="party-form" onSubmit={handleSubmit}>
+          <label>Party Name</label>
+          <input
+            type="text"
+            placeholder="Enter party name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
 
-        <label>Contact Info</label>
-        <input
-          type="text"
-          placeholder="Enter contact info"
-          value={contact}
-          onChange={(e) => setContact(e.target.value)}
-          required
-        />
+          <label>Contact Info</label>
+          <input
+            type="text"
+            placeholder="Enter contact info"
+            value={contact}
+            onChange={(e) => setContact(e.target.value)}
+            required
+          />
 
-        <button type="submit" className="submit-btn">
-          Add Party
-        </button>
-      </form>
-    </div>
+          <button type="submit" className="submit-btn">
+            Add Party
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
 

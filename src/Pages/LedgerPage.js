@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import NavbarComp from "../Components/NavbarComp";
 import "./LedgerPage.css";
 
 function LedgerPage() {
@@ -56,74 +57,82 @@ function LedgerPage() {
   if (!party) return <div>Loading...</div>;
 
   return (
-    <div className="ledger-container">
-      <h2>Ledger for {party.name}</h2>
-      <p>Contact: {party.contact}</p>
+    <>
+      <NavbarComp />
+      <div className="ledger-container">
+        <h2>Ledger for {party.name}</h2>
+        <p>Contact: {party.contact}</p>
 
-      <form className="ledger-form" onSubmit={handleSubmit}>
-        <select name="type" value={form.type} onChange={handleChange} required>
-          <option value="credit">Credit</option>
-          <option value="debit">Debit</option>
-        </select>
-        <input
-          type="number"
-          name="amount"
-          placeholder="Amount"
-          value={form.amount}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="note"
-          placeholder="Note"
-          value={form.note}
-          onChange={handleChange}
-        />
-        <button type="submit">Add Entry</button>
-      </form>
+        <form className="ledger-form" onSubmit={handleSubmit}>
+          <select
+            name="type"
+            value={form.type}
+            onChange={handleChange}
+            required
+          >
+            <option value="credit">Credit</option>
+            <option value="debit">Debit</option>
+          </select>
+          <input
+            type="number"
+            name="amount"
+            placeholder="Amount"
+            value={form.amount}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="note"
+            placeholder="Note"
+            value={form.note}
+            onChange={handleChange}
+          />
+          <button type="submit">Add Entry</button>
+        </form>
 
-      <h3>Balance Sheet</h3>
-      <table className="ledger-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Note</th>
-            <th>Credit</th>
-            <th>Debit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {entries.map((entry) => (
-            <tr key={entry.id}>
-              <td>{new Date(entry.date).toLocaleDateString()}</td>
-              <td>{entry.note}</td>
-              <td>{entry.type === "credit" ? entry.amount : ""}</td>
-              <td>{entry.type === "debit" ? entry.amount : ""}</td>
+        <h3>Balance Sheet</h3>
+        <table className="ledger-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Note</th>
+              <th>Credit</th>
+              <th>Debit</th>
             </tr>
-          ))}
-        </tbody>
-        <tfoot>
-          <tr className="totals-row">
-            <td colSpan="2">
-              <strong>Total</strong>
-            </td>
-            <td>
-              <strong>{totalCredit}</strong>
-            </td>
-            <td>
-              <strong>{totalDebit}</strong>
-            </td>
-          </tr>
-          <tr className="net-row">
-            <td colSpan="4">
-              <strong>Net Balance: ₹{netBalance}</strong> (
-              {netBalance >= 0 ? "Credit" : "Debit"})
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {entries.map((entry) => (
+              <tr key={entry.id}>
+                <td>{new Date(entry.date).toLocaleDateString()}</td>
+                <td>{entry.note}</td>
+                <td>{entry.type === "credit" ? entry.amount : ""}</td>
+                <td>{entry.type === "debit" ? entry.amount : ""}</td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr className="totals-row">
+              <td colSpan="2">
+                <strong>Total</strong>
+              </td>
+              <td>
+                <strong>{totalCredit}</strong>
+              </td>
+              <td>
+                <strong>{totalDebit}</strong>
+              </td>
+            </tr>
+            <tr className="net-row">
+              <td colSpan="4">
+                <strong>Net Balance: ₹{netBalance}</strong> (
+                {netBalance >= 0 ? "Credit" : "Debit"})
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </>
   );
 }
 
